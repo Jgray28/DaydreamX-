@@ -3,6 +3,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build
+# Forces the dynamic files to compile into raw, fast HTML/JS
+RUN npm run build 
 EXPOSE 8080
-CMD ["npm", "run", "start", "--", "--host", "0.0.0.0", "--port", "8080"]
+ENV HOST=0.0.0.0
+ENV PORT=8080
+# Launches the built files instantly without loading bottlenecks
+CMD ["npm", "run", "start"] 
